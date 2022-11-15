@@ -1,0 +1,8 @@
+SP=Stock Price
+OS=Outstanding Shares
+NI=Net Income
+NR=Net Revenue
+GM=Gross Margin
+COG=Cost of Goods
+TA=Total Assets
+TL=Total Liabilities
