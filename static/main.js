@@ -18,7 +18,15 @@ function tickerLoad() {
     ["Operating Profit Percent", "OPT_INC/TOT_REV", "#00FF00"],
     ["Net Profit Percent", "NET_INC/TOT_REV", "#0000FF"]
   ]);
-  
+  fetchGraph(ticker, "Total Balance Sheet", [
+    ["Total Assets", "TOT_AST", "#FF0000"],
+    ["Cash Assets", "CASH", "#0000FF"],
+    ["Accounts Receivable", "ACC_REC", "#FF00FF"],
+    ["Total Liabilities", "TOT_LIB", "#00FF00"]
+  ]);
+  fetchGraph(ticker, "Shares Count", [
+    ["Shares", "N_SHARES", "#FF0000"]
+  ])
 }
 
 elemGrid.style.gridTemplateColumns = `repeat(${Math.ceil((100-parseFloat(gridCountSlider.value)) * 6 / 100)}, 1fr)`;

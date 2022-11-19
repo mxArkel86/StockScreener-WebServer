@@ -1,0 +1,87 @@
+{
+    "main":{
+        "search_term":"(^(?:(?:consolidated|condensed) ?(?:consolidated|condensed)? ?balance sheets? ?(?:parenthetical)?$)|(?:^balance sheets?$))",
+        "examples":[
+            "condensed consolidated balance sheets",
+            "consolidated condensed balance sheets",
+            "consolidated balance sheets",
+            "balance sheets",
+            "consolidated balance sheets parenthetical",
+            "consolidated condensed balance sheets parenthetical",
+            "condensed consolidated balance sheets parenthetical",
+            "condensed consolidated balance sheet parenthetical",
+            "condensed consolidated balance sheet parenthetical"
+        ]
+    },
+    "properties":{
+        "Shares Outstanding":{
+            "tag":"N_SHARES",
+            "path":"shares_outstanding",
+            "search_terms":[
+                "common stock, shares outstanding (shares)",
+                "common stock, shares outstanding",
+                "common stock, outstanding (in shares)",
+                "Common stock, outstanding",
+                "Common stock, outstanding shares"
+            ]
+        },
+        "Cash":{
+            "tag":"CASH",
+            "path":"cash_assets",
+            "search_terms":[
+                "cash and cash equivalents"
+            ]
+        },
+        "Accounts Receivable":{
+            "tag":"ACC_REC",
+            "path":"accounts_receivable",
+            "search_terms":[
+                "accounts receivable",
+                "Accounts receivable, net"
+            ]
+        },
+        "Total assets":{
+            "tag":"TOT_AST",
+            "path":"total_assets",
+            "search_terms":[
+                "total assets"
+            ]
+        },
+        "Total Liabilities":{
+            "tag":"TOT_LIB",
+            "path":"total_liabilities",
+            "search_terms":[
+                "total liabilities"
+            ]
+        },
+        "Total Shareholder Equity":{
+            "tag":"TOT_SHE",
+            "path":"total_shareholder_equity",
+            "search_terms":[
+                "total stockholders equity"
+            ]
+        },
+        "Total Current Liabilities":{
+            "tag":"TOT_CLI",
+            "path":"total_current_liabilities",
+            "search_terms":[
+                "total current liabilities"
+            ]
+        },
+        "Total Current Assets":{
+            "tag":"TOT_CAS",
+            "path":"total_current_assets",
+            "search_terms":[
+                "total current assets"
+            ]
+        },
+        "Total Liabilities and Equity":{
+            "tag":"TOT_LAE",
+            "path":"total_liabilities_and_equity",
+            "search_terms":[
+                "total liabilities and stockholders equity",
+                "Total liabilities, temporary equity, and stockholders' equity"
+            ]
+        }
+}
+}

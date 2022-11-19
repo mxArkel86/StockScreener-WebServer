@@ -147,6 +147,9 @@ export function CIKFromTicker(ticker: string): string{
 
     var elem = getDictionaryValues(data).find(element => element["ticker"] == ticker)
     
+    if (elem == undefined)
+        throw "You spelled the ticker wrong or the ticker cache has not been updated in a while";
+
     var cik: number = elem["cik_str"];
     var cik_str: string = cik.toString().padStart(10, '0');
 

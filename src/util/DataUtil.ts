@@ -21,35 +21,51 @@ export function getDictionaryKeys(dict_: any) {
     return Object.keys(dict_);
 }
 
+export function valueInSearchTerms(search_terms: string[], val: string) {
+    return (search_terms.map(x => norm(x)).includes(norm(val)));
+}
+
 export function norm(val: string) {
-    return val.toLowerCase().replace(/\([^\(]+\)/, "").replace(/[^A-z ]/, "").trim();
+    return val.toLowerCase().replace(/[^A-z ]/, "").replace(/[ ]+/, " ").trim();
 }
 
 export function num_norm(val: string) {
     var str: string = val + "";
-    return str.replace(/[^\d]/, "");
+    return str.replace(/[^\d-\.]/, "");
 }
 
 export function isNumeric(num:any){
     return !isNaN(num);
 }
 
-export function combineIncomeStatements(a:IncomeStatement, b:IncomeStatement, callback: (a: number, b:number) => number):IncomeStatement{
-    var out_data: IncomeStatement = {
-        "revenue": combineDataSets(a.revenue, b.revenue, callback),
-        "gross_income": combineDataSets(a.gross_income, b.gross_income, callback),
-        "net_income": combineDataSets(a.net_income, b.net_income, callback),
-        "operating_income": combineDataSets(a.operating_income, b.operating_income, callback)
+export function combinePropertySet(a: { [val: string]: DataSet }, b: { [val: string]: DataSet }, callback: (a: number, b: number) => number): { [val: string]: DataSet }{
+    var data_out: { [val: string]: DataSet } = {};
+    for (var prop in b) {
+        if (a[prop] == null || b[prop] == null)
+            continue;
+        
+        var data = combineDataSets(a[prop], b[prop], callback);
+        data_out[prop] = data;
         
     }
-    return out_data;
+
+    return data_out;
 }
 
 export function combineDataSets(a: DataSet, b: DataSet, callback: (a: number, b: number) => number):DataSet {
-    var out_data: DataSet = {
-        "value":callback(a.value, b.value)
+    if (a.is_set && b.is_set) {
+        var out_data: DataSet = {
+            "value": callback(a.value, b.value),
+            "is_set": true
+        }
+        return out_data;
+    } else {
+        var out_data: DataSet = {
+            "value": 0,
+            "is_set": false
+        }
+        return out_data;
     }
-    return out_data;
 }
 
 export function dataIsEmpty(a: DataSet) {

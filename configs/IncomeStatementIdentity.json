@@ -1,0 +1,56 @@
+{
+    "main":{
+        "search_terms":"(^(?:(?:consolidated|condensed)[ ]?(?:consolidated|condensed)?[ ]?Statements? of (?:Income|Operations))|(?:^income statements?$))",
+        "examples":
+            [
+                "consolidated condensed statements of income",
+                "condensed consolidated statements of income",
+                "consolidated statements of income", "income statements",
+                "consolidated statements of operations",
+                "condensed consolidated statements of operations",
+                "income statements"
+            ]
+    },
+    "properties":{
+        "Revenue":{
+            "tag":"TOT_REV",
+            "path":"revenue",
+            "search_terms":[
+                "revenue",
+                "net revenue",
+                "total net sales",
+                "revenues"
+            ]
+        },
+        "Cost of Goods Sold":{
+            "tag":"COGS",
+            "path":"cost_of_goods",
+            "search_terms":[
+                "cost of sales",
+                "cost of revenues"
+            ]
+        },
+        "Gross Income":{
+            "tag":"GRS_INC",
+            "path":"gross_income",
+            "search_terms":[
+                "gross margin",
+                "gross profit"
+            ]
+        },
+        "Net Income":{
+            "tag":"NET_INC",
+            "path":"net_income",
+            "search_terms":[
+                "net income"
+            ]
+        },
+        "Operating Income":{
+            "tag":"OPT_INC",
+            "path":"operating_income",
+            "search_terms":[
+                "operating income"
+            ]
+        }
+}
+}
