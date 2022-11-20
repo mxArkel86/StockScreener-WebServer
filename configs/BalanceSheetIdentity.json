@@ -1,30 +1,14 @@
 {
     "main":{
-        "search_term":"(^(?:(?:consolidated|condensed) ?(?:consolidated|condensed)? ?balance sheets? ?(?:parenthetical)?$)|(?:^balance sheets?$))",
+        "search_term":"(^(?:(?:consolidated|condensed) ?(?:consolidated|condensed)? ?balance sheets?$)|(?:^balance sheets?$))",
         "examples":[
             "condensed consolidated balance sheets",
             "consolidated condensed balance sheets",
             "consolidated balance sheets",
-            "balance sheets",
-            "consolidated balance sheets parenthetical",
-            "consolidated condensed balance sheets parenthetical",
-            "condensed consolidated balance sheets parenthetical",
-            "condensed consolidated balance sheet parenthetical",
-            "condensed consolidated balance sheet parenthetical"
+            "balance sheets"
         ]
     },
     "properties":{
-        "Shares Outstanding":{
-            "tag":"N_SHARES",
-            "path":"shares_outstanding",
-            "search_terms":[
-                "common stock, shares outstanding (shares)",
-                "common stock, shares outstanding",
-                "common stock, outstanding (in shares)",
-                "Common stock, outstanding",
-                "Common stock, outstanding shares"
-            ]
-        },
         "Cash":{
             "tag":"CASH",
             "path":"cash_assets",

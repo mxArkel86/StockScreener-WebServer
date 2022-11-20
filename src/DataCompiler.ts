@@ -1,7 +1,8 @@
-import { BalanceSheet, BalanceSheet_EMPTY, CashFlow, CashFlow_EMPTY, DocumentInfo, getBalanceSheet, getDate, getExcelJSON, getIdentifyingInformation, getIncomeStatement, IncomeStatement, IncomeStatement_EMPTY, PropertySet } from "./ExcelUtil";
-import { CIKFromTicker, getSubmissionData, ReportInfo, saveExcelDoc } from "./FetchUtil";
+import { BalanceSheet, BalanceSheet_EMPTY, CashFlow, CashFlow_EMPTY, DocumentInfo, getBalanceSheet, getDate, getIdentifyingInformation, getIncomeStatement, IncomeStatement, IncomeStatement_EMPTY, PropertySet } from "./FinancialStatementParser";
+import { CIKFromTicker, getSubmissionData, ReportInfo, saveExcelDoc } from "./util/FetchUtil";
 import { createChart } from "./util/ChartUtil";
 import { combinePropertySet, combineDataSets, evaluateExpression, getDictionaryKeys, getDictionaryValues } from "./util/DataUtil";
+import { getExcelJSON } from "./util/ExcelUtil";
 const fs = require("fs");
 
 export type ReportDecodedData = {
@@ -24,7 +25,7 @@ function insertExpressionVariables(expression:string, config_data:any, values:Pr
 export function chartRequest(ticker: string,  listdata: string[][]):Promise<any>[] {
     const cik = CIKFromTicker(ticker);
 
-    var quarters = 12;
+    var quarters = 8;
 
     var line_titles: string[] = listdata.map(x => x[0]);
     var colors: string[] = listdata.map(x => x[2]);
@@ -48,12 +49,15 @@ export function chartRequest(ticker: string,  listdata: string[][]):Promise<any>
 
             var income_config = JSON.parse(fs.readFileSync("configs/IncomeStatementIdentity.json"));
             var balance_config = JSON.parse(fs.readFileSync("configs/BalanceSheetIdentity.json"));
+            var balance_parenthetical_config = JSON.parse(fs.readFileSync("configs/BalanceSheetParentheticalIdentity.json"));
 
             var substituted_func: string = func;
 
             substituted_func = insertExpressionVariables(substituted_func, income_config, income_data);
         
             substituted_func = insertExpressionVariables(substituted_func, balance_config, balance_data);
+
+            substituted_func = insertExpressionVariables(substituted_func, balance_parenthetical_config, balance_data);
             
             
             var y_val: number = evaluateExpression(substituted_func);
@@ -80,8 +84,12 @@ function getJSONBrief(cik: string, report: ReportInfo) {
 function getRemainderSet(cik:string, yearly:PropertySet, q1:PropertySet, q2:PropertySet, q3:PropertySet) {
     var out_data: PropertySet = yearly;
 
-    const sub_func = (a: number, b: number) => {
-        return a - b;
+    const sub_func = (a: number | undefined, b: number | undefined) => {
+        if (a != undefined && b != undefined) {
+            return a! - b!;
+        } else {
+            return undefined;
+        }
     };
     
     out_data = combinePropertySet(out_data, q1, sub_func);

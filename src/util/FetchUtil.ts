@@ -2,8 +2,8 @@ const syncfetch = require('sync-fetch')
 const fs = require('fs');
 const execSync = require('child_process').execSync;
 
-import { getDictionaryValues } from "./util/DataUtil";
-import {setCache, cachePath, isCache} from "./sys/CacheManager"
+import { getDictionaryValues } from "./DataUtil";
+import {setCache, cachePath, isCache} from "../sys/CacheManager"
 
 export type ReportInfo = {
     "accessionNumberRaw": string,
