@@ -1,6 +1,6 @@
 {
     "main":{
-        "search_terms":"(^(?:(?:consolidated|condensed)[ ]?(?:consolidated|condensed)?[ ]?Statements? of (?:Income|Operations))|(?:^income statements?$))",
+        "search_terms":"(^(?:(?:consolidated|condensed)[ ]?(?:consolidated|condensed)?[ ]?Statements? of (?:Income|Operations|Earnings))|(?:^income statements?$))",
         "examples":
             [
                 "consolidated condensed statements of income",
@@ -19,7 +19,8 @@
                 "revenue",
                 "net revenue",
                 "total net sales",
-                "revenues"
+                "revenues",
+                "net sales"
             ]
         },
         "Cost of Goods Sold":{

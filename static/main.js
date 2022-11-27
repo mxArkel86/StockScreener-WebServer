@@ -24,8 +24,13 @@ function tickerLoad() {
   //   ["Accounts Receivable", "ACC_REC", "#FF00FF"],
   //   ["Total Liabilities", "TOT_LIB", "#00FF00"]
   // ]);
-  fetchGraph(ticker, "Shares Count", [
-    ["Shares", "N_SHARES", "#FF0000"]
+  fetchGraph(ticker, "Market Cap", [
+    ["Market Cap", "STOCK*SHARES", "#FF0000"]
+  ])
+  fetchGraph(ticker, "Income Statement Ratios", [
+    ["Gross", "GRS_INC/TOT_REV", "#00FF00"],
+    ["Operating", "OPT_INC/TOT_REV", "#0000FF"],
+    ["Net", "NET_INC/TOT_REV", "#FF00FF"]
   ])
 }
 

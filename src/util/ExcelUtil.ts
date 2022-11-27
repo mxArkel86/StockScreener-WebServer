@@ -1,25 +1,23 @@
-import { anyAreInvalid, combineDataSets, combinePropertySet, dataIsEmpty, EXC_OR, getDictionaryKeys, getDictionaryValues, isEmptyString, isNumeric, norm, num_norm, onValid, valueInSearchTerms } from "./DataUtil";
+import { getDictionaryKeys, getDictionaryValues, normStr } from "./DataUtil";
 
-const xlsx = require("xlsx");
-const fs = require("fs");
+import xlsx from "xlsx";
 
-
-export type SHEET_DATA_ROW = (string|number)[]
-export type SHEET_DATA = { header: (string | number)[], rows: SHEET_DATA_ROW[] };
-export type EXCEL_DATA = { [name: string]: SHEET_DATA };
+export type Findoc_SHEET_DATA_ROW = (string|number)[]
+export type Findoc_SHEET_DATA = { header: (string | number)[], rows: Findoc_SHEET_DATA_ROW[] };
+export type Findoc_EXCEL_DATA = { [name: string]: Findoc_SHEET_DATA };
 
 /** 
      * Parses raw json data into a structured object
      * @param {string} path
-     * @returns {EXCEL_DATA}
+     * @returns {Findoc_EXCEL_DATA}
      * */
-export function getExcelJSON(path:string): EXCEL_DATA {
+export function getExcelJSON(path:string): Findoc_EXCEL_DATA {
     const file = xlsx.readFile(path);
 
     
 
-    var out_data: EXCEL_DATA = {};
-    for (var name of file.SheetNames) {
+    const out_data: Findoc_EXCEL_DATA = {};
+    for (const name of file.SheetNames) {
         const json_data:{[val:string]:string|number}[] = xlsx.utils.sheet_to_json(file.Sheets[name]);
 
         // console.log("------------")
@@ -28,14 +26,15 @@ export function getExcelJSON(path:string): EXCEL_DATA {
         if (json_data.length <= 1)
             continue;
 
-        var header:(string)[] = getDictionaryKeys(json_data[1]);
-        var title = norm(header[0].split('-')[0]);
-        var newrows:SHEET_DATA_ROW[] = [];
-        for (var i = 0; i < json_data.length;i++) {
-            var rowelem: { [name: string]: (string | number) } = json_data[i];
-            var newrow = header.map(x => "");
-            for (var row in getDictionaryValues(rowelem)) {
-                newrow[row] = getDictionaryValues(rowelem)[row];
+        const header:string[] = getDictionaryKeys(json_data[1]) as string[];
+        const title = normStr(header[0].split('-')[0]);
+        //var units = normStr(header[0].split('-')[1]);
+        const newrows:Findoc_SHEET_DATA_ROW[] = [];
+        for (let i = 0; i < json_data.length;i++) {
+            const rowelem: { [name: string]: (string | number) } = json_data[i];
+            const newrow = Array(header.length).fill('')
+            for (const row in getDictionaryValues(rowelem)) {
+                newrow[row] = getDictionaryValues(rowelem)[row] as string;
             }
 
             
@@ -53,11 +52,11 @@ export function getExcelJSON(path:string): EXCEL_DATA {
 }
 
 
-export function writeToExcel(path: string, data: any) {
+export function writeToExcel(path: string, data: unknown[][]) {
     
-    var workbook = xlsx.utils.book_new();
+    const workbook = xlsx.utils.book_new();
 
-    var worksheet = xlsx.utils.aoa_to_sheet(data);
+    const worksheet = xlsx.utils.aoa_to_sheet(data);
     
     xlsx.utils.book_append_sheet(workbook, worksheet, "Sheet1");
     xlsx.writeFileXLSX(workbook, path);

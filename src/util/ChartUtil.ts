@@ -1,23 +1,35 @@
-const { ChartJSNodeCanvas } = require('chartjs-node-canvas');
+import { ChartJSNodeCanvas } from 'chartjs-node-canvas'
 
-export async function createChart(xvalues: any[], yvalues_total: number[][], titles:string[], colors:string[], pixelwidth:number, pixelheight:number) {
+export async function createChart(xvalues: (string|number)[], yvalues_total: number[][], titles:string[], colors:string[], pixelwidth:number, pixelheight:number):Promise<Buffer> {
     // console.log(yvalues_total);
     
-    var configuration: any = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const configuration: any = {
         type: 'line',
         data: {
             labels: xvalues,
             datasets: []
+        },
+        options: {
+            scales: {
+                x: {
+                    ticks: {
+                        maxTicksLimit:xvalues.length
+                    }
+                }
+            }
         }
     }
 
-    for (var i in yvalues_total) {
+    for (const i in yvalues_total) {
         const title = titles[i];
-        var entry:any = {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const entry:any = {
             label: title,
             data: yvalues_total[i],
             borderColor: colors[i],
-            borderWidth: 1
+            borderWidth: 1,
+            radius: 0
         };
         configuration.data.datasets.push(entry);
     }
@@ -26,6 +38,6 @@ export async function createChart(xvalues: any[], yvalues_total: number[][], tit
     
     const chartJSNodeCanvas = new ChartJSNodeCanvas({ width: pixelwidth, height: pixelheight });
 
-    const image = await chartJSNodeCanvas.renderToBuffer(configuration);
+    const image:Buffer = await chartJSNodeCanvas.renderToBuffer(configuration);
     return image;
 }

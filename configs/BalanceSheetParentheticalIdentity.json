@@ -11,7 +11,7 @@
     },
     "properties":{
         "Shares Outstanding":{
-            "tag":"N_SHARES",
+            "tag":"SHARES",
             "path":"shares_outstanding",
             "search_terms":[
                 "common stock shares outstanding shares",
